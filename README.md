@@ -36,7 +36,7 @@ Este projeto implementa autenticação em duas etapas (2FA) com código OTP gera
 ## Testes
 
 - O código OTP e os emails de recuperação aparecem no terminal.
-- O código expira automaticamente após 30 segundos.
+- O código expira automaticamente após 5 minutos.
 - O fluxo completo pode ser testado localmente sem envio real de emails.
 
 ---
@@ -216,3 +216,4 @@ O objetivo é garantir que todos os usuários tenham senhas com pelo menos **8 c
 * Adicionar verificação de força de senha em tempo real com JavaScript.
 * Usar `UserCreationForm` personalizado do Django para validação integrada.
 * Adicionar bloqueio temporário após múltiplas tentativas de login incorretas.
+
