@@ -12,12 +12,29 @@
   <body class="bg-light">
 
     <header>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-danger-subtle">
-        <div class="container-fluid justify-content-center">
-          <span class="navbar-brand mb-0 h1 mx-3 text-gray"> SGBooks - Sistemas de Gerenciamento de Livros </span>
-        <a href="{% url 'logout' %}" class="danger">Sair</a>
-        </div>
-      </nav>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-danger-subtle">
+          <div class="container-fluid">
+            <a class="navbar-brand mb-0 h1 mx-3 text-gray" href="#">SGBooks - Sistemas de Gerenciamento de Livros</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link text-danger" href="{% url 'autores' %}">Autores</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-danger" href="{% url 'livros' %}">Livros</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-danger" href="{% url 'logout' %}" class="danger">Sair</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
     </header>
 
 
@@ -41,7 +58,7 @@
       <div class="card p-4 mb-4 shadow-sm">
           <form action="" method="POST">
             {% csrf_token %}
-            <input type="hidden" name="livro_id" value="{{ livro_editar|default:'' }}">
+            <input type="hidden" name="livro_id" value="{{ livro_editar.id|default:'' }}">
 
 
             <div class="row g-3">
@@ -51,7 +68,7 @@
               </div>
               <div class="col-md-6">
                 <label class="form-label">Autor(a)</label>
-                <input type="text" name="autor" class="form-control" value="{{ livro_editar.autor|default:'' }}" required>
+                <input type="text" name="autor" class="form-control" value="{{ livro_editar.autor.nome|default:'' }}" required>
               </div>
               <div class="col-md-4">
                 <label class="form-label">Ano de Publicação</label>
@@ -84,7 +101,7 @@
             {% for livro in livros %}
               <tr>
                 <td>{{ livro.titulo }}</td>
-                <td>{{ livro.autor }}</td>
+                <td>{{ livro.autor.nome }}</td>
                 <td>{{ livro.ano_publicacao }}</td>
                 <td>{{ livro.editora }}</td>
                 <td>

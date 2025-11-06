@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Cadastro de Autores</title>
+</head>
+<body>
+    <body class="bg-light">
+
+        <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-danger-subtle">
+        <div class="container-fluid">
+            <a class="navbar-brand mb-0 h1 mx-3 text-gray" href="#">SGBooks - Sistemas de Gerenciamento de Livros</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="#">Autores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="{% url 'livros' %}">Livros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="{% url 'logout' %}" class="danger">Sair</a>
+                </li>
+            </ul>
+            </div>
+        </div>
+        </nav>
+    </header>
+
+    <div class="container mt-5">
+        <h1 class="mb-4 text-center text-danger">Cadastro de Autores</h1>
+        <div class="card p-4 mb-4 shadow-sm">
+            <form action="{% url 'cadastra_autor' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="autor_id" value="{{ autor_editar.id|default:'' }}">
+    
+            <div class="mb-3">
+                <label for="nome_autor" class="form-label">Nome do Autor(a)</label>
+                <input type="text" class="form-control" id="nome_autor" name="nome" value="{{ autor_editar.nome|default:'' }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="sobrenome" class="form-label">Sobrenome</label>
+                <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="{{ autor_editar.sobrenome|default:'' }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="data_nascimento" class="form-label">Data de Nascimento</label>
+                <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" value="{{ autor_editar.data_nascimento|date:'Y-m-d' }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="nacionalidade" class="form-label">Nacionalidade</label>
+                <input type="text" class="form-control" id="nacionalidade" name="nacionalidade" value="{{ autor_editar.nacionalidade|default:'' }}" required>
+            </div>
+                <button type="submit" class="btn btn-danger">Salvar Autor(a)</button>
+            </form>
+        </div>    
+
+            <!-- Autores Cadastrados -->
+        <div class="card p-4 shadow-sm">
+            <h6 class="mb-3">Livros Cadastrados</h6>
+
+            <table class="table table-striped table-hover">
+            <tr>
+                <th>Nome</th>
+                <th>Sobrenome</th>
+                <th>Data de Nascimento</th>
+                <th>Nacionalidade</th>
+                <th>Ações</th>
+            </tr>
+            <!--abrir o for-->
+            {% for autor in autores %}
+                <tr>
+                <td>{{ autor.nome }}</td>
+                <td>{{ autor.sobrenome}}</td>
+                <td>{{ autor.data_nascimento }}</td>
+                <td>{{ autor.nacionalidade }}</td>
+                <td>
+                    <!-- aqui ações de edição e exclusão -->
+                    <a href="{% url 'edita_autor' autor.id %}" class="btn btn-sm btn-primary">Editar</a>
+                    <a href="{% url 'exclui_autor' autor.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Deseja excluir esse livro?')">Excluir</a>
+                </td>
+                </tr>
+            {% empty %}
+            </table>
+            <tr>
+                <td colspan="5" class="text-center">Nenhum Autor cadastrado.</td>
+            </tr>
+            <!--fechar o for-->
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

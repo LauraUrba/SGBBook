@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Livro
+from .models import Livro, Autor
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 # Create your views here.
@@ -42,13 +42,15 @@ def cadastro_livro(request):
             try:
                 livro = Livro.objects.get(id=livro_id)
                 livro.titulo = titulo
+                autor, created = Autor.objects.get_or_create(nome=autor)
                 livro.autor = autor
                 livro.ano_publicacao = ano_publicacao
                 livro.editora = editora
                 livro.save()
             except Livro.DoesNotExist:
                 messages.error(request, 'Livro não encontrado para edição.')
-        else:  # Caso contrário, crie um novo livro
+        else:  # Caso contrário, crie um novo livro. Salva um livro
+            autor = Autor.objects.create(nome=autor)
             Livro.objects.create(
                 titulo=titulo,
                 autor=autor,
@@ -59,7 +61,8 @@ def cadastro_livro(request):
         return redirect('cadastro_livro')
 
     livros = Livro.objects.all()
-    return render(request, 'livros.html', {'livros': livros})
+    autores = Autor.objects.all()
+    return render(request, 'livros.html', {'livros': livros, 'autores': autores})
 
 
 
@@ -74,14 +77,76 @@ def exclui_livro(request, livro_id):
 def edita_livro(request, livro_id):
     livro = get_object_or_404(Livro, id=livro_id)
     livros = Livro.objects.all()  # Recupera todos os livros do banco de dados
+    autores = Autor.objects.all()
     
     if request.method == 'POST':
         livro.titulo = request.POST['titulo']
-        livro.autor = request.POST['autor']
+        #livro.autor = request.POST['autor']
+        autor = request.POST['autor']
+        autor, created = Autor.objects.get_or_create(nome=autor)
+        livro.autor = autor
         livro.ano_publicacao = request.POST['ano_publicacao']
         livro.editora = request.POST['editora']
         livro.save()
         return redirect('cadastro_livro')
-    return render(request, 'livros.html', {'livros': livros, 'livro_editar': livro})
+    return render(request, 'livros.html', {'livros': livros, 'autores': autores, 'livro_editar': livro})
 
-# Create your views here.
+
+
+# AUTORES
+
+
+def autores(request):
+    autores = Autor.objects.all()
+    return render(request, 'autor.html', {'autores': autores})
+
+@login_required
+def cadastra_autor(request):
+    if request.method == 'POST':
+        autor_id = request.POST.get('autor_id')
+        nome = request.POST['nome']
+        sobrenome = request.POST['sobrenome']
+        data_nascimento = request.POST['data_nascimento']
+        nacionalidade = request.POST['nacionalidade']
+
+        if autor_id:
+            try:
+                autor = Autor.objects.get(id=autor_id)
+                autor.nome = nome
+                autor.sobrenome = sobrenome
+                autor.data_nascimento = data_nascimento
+                autor.nacionalidade = nacionalidade
+                autor.save()
+            except Autor.DoesNotExist:
+                messages.error(request, 'Autor não encontrado para edição.')
+        else:
+            Autor.objects.create(
+                nome=nome,
+                sobrenome=sobrenome,
+                data_nascimento=data_nascimento,
+                nacionalidade=nacionalidade
+            )
+
+        return redirect('autores')  # redireciona para a lista de autores
+
+    autores = Autor.objects.all()
+    return render(request, 'autor.html', {'autores': autores})
+
+def edita_autor(request, autor_id):
+    autor = get_object_or_404(Autor, id=autor_id)
+
+    if request.method == 'POST':
+        autor.nome = request.POST['nome']
+        autor.sobrenome = request.POST['sobrenome']
+        autor.data_nascimento = request.POST['data_nascimento']
+        autor.nacionalidade = request.POST['nacionalidade']
+        autor.save()
+        return redirect('autores')
+
+    autores = Autor.objects.all()
+    return render(request, 'autor.html', {'autor_editar': autor, 'autores': autores})
+
+def exclui_autor(request, autor_id):
+    autor = get_object_or_404(Autor, id=autor_id)
+    autor.delete()
+    return redirect('autores')
