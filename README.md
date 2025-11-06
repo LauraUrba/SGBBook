@@ -216,28 +216,19 @@ O objetivo é garantir que todos os usuários tenham senhas com pelo menos **8 c
 * Adicionar verificação de força de senha em tempo real com JavaScript.
 * Usar `UserCreationForm` personalizado do Django para validação integrada.
 * Adicionar bloqueio temporário após múltiplas tentativas de login incorretas.
+___________________________________________________________________________________________
 
-# Tela de Cadastrar Autores
 
-# Autenticação com OTP e Recuperação de Senha no Django
+# 📚 SGBooks – Sistema de Gerenciamento de Livros
 
-##Funcionalidades
+SGBooks é uma aplicação web desenvolvida com Django para gerenciar autores e livros. O sistema permite cadastrar, editar e excluir autores, além de listar os livros associados. A interface é moderna e responsiva, utilizando Bootstrap 5.
 
-   * Cadastro de autores com nome, sobrenome, data de nascimento e nacionalidade
-   * Edição e exclusão de autores
-   * Listagem de autores cadastrados
-   * Interface responsiva com Bootstrap 5
-   * Proteção de rotas com login obrigatório
+---
 
-   ## 🧠 Estrutura do Projeto
+## 🚀 Funcionalidades
 
-### 🔧 Backend (Django)
-
-- **Modelos**:  
-  ```python
-  class Autor(models.Model):
-      nome = models.CharField(max_length=150)
-      sobrenome = models.CharField(max_length=500)
-      data_nascimento = models.DateField(blank=True, null=True)
-      nacionalidade = models.CharField(max_length=80, blank=True, null=True)
-``
+- ✅ Cadastro de autores com nome, sobrenome, data de nascimento e nacionalidade  
+- ✏️ Edição e exclusão de autores  
+- 📋 Listagem de autores cadastrados  
+- 🔐 Proteção de rotas com login obrigatório  
+- 🎨 Interface responsiva com Bootstrap 5  
