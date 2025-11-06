@@ -41,8 +41,6 @@ Este projeto implementa autenticação em duas etapas (2FA) com código OTP gera
 
 ---
 
-Se quiser, posso te ajudar a expandir esse README com instruções de instalação ou exemplos de uso. É só pedir!
-
 
 
 *-----------------*
@@ -232,3 +230,4 @@ SGBooks é uma aplicação web desenvolvida com Django para gerenciar autores e 
 - 📋 Listagem de autores cadastrados  
 - 🔐 Proteção de rotas com login obrigatório  
 - 🎨 Interface responsiva com Bootstrap 5  
+
