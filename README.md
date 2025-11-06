@@ -217,3 +217,27 @@ O objetivo é garantir que todos os usuários tenham senhas com pelo menos **8 c
 * Usar `UserCreationForm` personalizado do Django para validação integrada.
 * Adicionar bloqueio temporário após múltiplas tentativas de login incorretas.
 
+# Tela de Cadastrar Autores
+
+# Autenticação com OTP e Recuperação de Senha no Django
+
+##Funcionalidades
+
+   * Cadastro de autores com nome, sobrenome, data de nascimento e nacionalidade
+   * Edição e exclusão de autores
+   * Listagem de autores cadastrados
+   * Interface responsiva com Bootstrap 5
+   * Proteção de rotas com login obrigatório
+
+   ## 🧠 Estrutura do Projeto
+
+### 🔧 Backend (Django)
+
+- **Modelos**:  
+  ```python
+  class Autor(models.Model):
+      nome = models.CharField(max_length=150)
+      sobrenome = models.CharField(max_length=500)
+      data_nascimento = models.DateField(blank=True, null=True)
+      nacionalidade = models.CharField(max_length=80, blank=True, null=True)
+``
