@@ -217,3 +217,40 @@ O objetivo é garantir que todos os usuários tenham senhas com pelo menos **8 c
 * Usar `UserCreationForm` personalizado do Django para validação integrada.
 * Adicionar bloqueio temporário após múltiplas tentativas de login incorretas.
 
+*_______________________________________________________________________________________________*
+
+# 12/11/2025
+
+## 🔐 Funcionalidades de Segurança
+
+### ✅ Cadastro de Usuário
+- Validação de campos obrigatórios: nome, sobrenome, nome de usuário, e-mail e senha.
+- Verificação de formato de e-mail com expressão regular.
+- Políticas de senha fortes:
+  - Mínimo de 8 caracteres
+  - Pelo menos uma letra maiúscula
+  - Pelo menos uma letra minúscula
+  - Pelo menos um número
+  - Pelo menos um símbolo (ex: `!@#$%`)
+- Verificação de nome de usuário já existente.
+- Criação segura do usuário com `create_user`.
+
+### 🔐 Login com Autenticação em Dois Fatores (2FA)
+- Autenticação inicial com nome de usuário e senha.
+- Geração e envio de código OTP (One-Time Password) para o e-mail do usuário.
+- Verificação do código OTP antes de liberar acesso à área de cadastro de livros.
+
+### ⏳ Bloqueio Temporário por Tentativas Falhas
+- Após 3 tentativas de login incorretas, o usuário é bloqueado por 10 segundos.
+- Durante o bloqueio, o sistema exibe um card de alerta com o tempo restante.
+- Após o tempo, o bloqueio é removido automaticamente e o contador de tentativas é resetado.
+
+---
+
+## 🧩 Tecnologias Utilizadas
+
+- Python 3.x
+- Django 4.x
+- Bootstrap 5.3
+- HTML/CSS (Django Templates)
+- SQLite (banco de dados padrão para desenvolvimento)
